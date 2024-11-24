@@ -1,0 +1,351 @@
+<?xml version="1.0"?>
+<robot name="spot" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name="intermediate_x_translation" />
+    <link name="intermediate_y_translation" />
+    <link name="intermediate_z_translation" />
+    <link name="intermediate_roll_rotation" />
+    <link name="intermediate_pitch_rotation" />
+
+    <link name="world_frame" />
+
+    <joint name="translate_x" type="prismatic">
+        <parent link="world_frame" />
+        <child link="intermediate_x_translation" />
+        <axis xyz="1 0 0" />
+        <limit lower="-1" upper="1" effort="1000" velocity="10" />
+    </joint>
+
+    <joint name="translate_y" type="prismatic">
+        <parent link="intermediate_x_translation" />
+        <child link="intermediate_y_translation" />
+        <axis xyz="0 1 0" />
+        <limit lower="-1" upper="1" effort="1000" velocity="10" />
+    </joint>
+
+    <joint name="translate_z" type="prismatic">
+        <parent link="intermediate_y_translation" />
+        <child link="intermediate_z_translation" />
+        <axis xyz="0 0 1" />
+        <limit lower="-1" upper="1" effort="1000" velocity="10" />
+    </joint>
+
+    <joint name="rotate_roll" type="revolute">
+        <parent link="intermediate_z_translation" />
+        <child link="intermediate_roll_rotation" />
+        <axis xyz="1 0 0" />
+        <limit lower="-3.14" upper="3.14" effort="1000" velocity="10" />
+    </joint>
+
+    <joint name="rotate_pitch" type="revolute">
+        <parent link="intermediate_roll_rotation" />
+        <child link="intermediate_pitch_rotation" />
+        <axis xyz="0 1 0" />
+        <limit lower="-3.14" upper="3.14" effort="1000" velocity="10" />
+    </joint>
+
+    <joint name="rotate_yaw" type="revolute">
+        <parent link="intermediate_pitch_rotation" />
+        <child link="body" />
+        <axis xyz="0 0 1" />
+        <limit lower="-3.14" upper="3.14" effort="1000" velocity="10" />
+    </joint>
+
+
+    <link name="body">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/body.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/body_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+
+    <link name="base_link" />
+    <joint name="base_link_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="base_link" />
+    </joint>
+
+    <link name="front_rail" />
+    <joint name="front_rail_joint" type="fixed">
+        <origin xyz="0.223 0 0.0805" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="front_rail" />
+    </joint>
+
+    <link name="real_front_rail" />
+    <joint name="real_front_rail_joint" type="fixed">
+        <origin xyz="0.2075 0 0.0805" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="real_front_rail" />
+    </joint>
+
+    <link name="rear_rail" />
+    <joint name="rear_rail_joint" type="fixed">
+        <origin xyz="-0.223 0 0.0805" rpy="0 0 0" />
+        <parent link="body" />
+        <child link="rear_rail" />
+    </joint>
+
+    <link name="real_rear_rail" />
+    <joint name="real_rear_rail_joint" type="fixed">
+        <origin xyz="-0.415 0 0" rpy="0 0 0" />
+        <parent link="real_front_rail" />
+        <child link="real_rear_rail" />
+    </joint>
+
+    <link name="front_left_hip">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_left_hip.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_left_hip_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="front_left_hip_x" type="revolute">
+        <origin xyz="0.29785 0.05500 0.00000" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <parent link="body" />
+        <child link="front_left_hip" />
+        <limit effort="1000" velocity="1000.00" lower="-0.78539816339744827899"
+            upper="0.78539816339744827899" />
+    </joint>
+    <link name="front_left_upper_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_left_upper_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh
+                    filename="package://attraction_description/meshes/front_left_upper_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="front_left_hip_y" type="revolute">
+        <origin xyz="0.0 0.110945 0.0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="front_left_hip" />
+        <child link="front_left_upper_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-0.89884456477707963539"
+            upper="2.2951079663725435509" />
+    </joint>
+    <link name="front_left_lower_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_left_lower_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh
+                    filename="package://attraction_description/meshes/front_left_lower_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="front_left_knee" type="revolute">
+        <origin xyz="0.025 0.000 -0.3205" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="front_left_upper_leg" />
+        <child link="front_left_lower_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-2.7929" upper="-0.254801" />
+    </joint>
+    <link name="front_right_hip">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_right_hip.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_right_hip_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="front_right_hip_x" type="revolute">
+        <origin xyz="0.29785 -0.05500 0.00000" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <parent link="body" />
+        <child link="front_right_hip" />
+        <limit effort="1000" velocity="1000.00" lower="-0.78539816339744827899"
+            upper="0.78539816339744827899" />
+    </joint>
+    <link name="front_right_upper_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_right_upper_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh
+                    filename="package://attraction_description/meshes/front_right_upper_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="front_right_hip_y" type="revolute">
+        <origin xyz="0.0 -0.110945 0.0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="front_right_hip" />
+        <child link="front_right_upper_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-0.89884456477707963539"
+            upper="2.2951079663725435509" />
+    </joint>
+    <link name="front_right_lower_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/front_right_lower_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh
+                    filename="package://attraction_description/meshes/front_right_lower_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="front_right_knee" type="revolute">
+        <origin xyz="0.025 0.000 -0.3205" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="front_right_upper_leg" />
+        <child link="front_right_lower_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-2.7929" upper="-0.247563" />
+    </joint>
+    <link name="rear_left_hip">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_left_hip.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_left_hip_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="rear_left_hip_x" type="revolute">
+        <origin xyz="-0.29785 0.05500 0.00000" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <parent link="body" />
+        <child link="rear_left_hip" />
+        <limit effort="1000" velocity="1000.00" lower="-0.78539816339744827899"
+            upper="0.78539816339744827899" />
+    </joint>
+    <link name="rear_left_upper_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_left_upper_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_left_upper_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="rear_left_hip_y" type="revolute">
+        <origin xyz="0.0 0.110945 0.0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="rear_left_hip" />
+        <child link="rear_left_upper_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-0.89884456477707963539"
+            upper="2.2951079663725435509" />
+    </joint>
+    <link name="rear_left_lower_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_left_lower_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_left_lower_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="rear_left_knee" type="revolute">
+        <origin xyz="0.025 0.000 -0.3205" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="rear_left_upper_leg" />
+        <child link="rear_left_lower_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-2.7929" upper="-0.267153" />
+    </joint>
+    <link name="rear_right_hip">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_right_hip.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_right_hip_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="rear_right_hip_x" type="revolute">
+        <origin xyz="-0.29785 -0.05500 0.00000" rpy="0 0 0" />
+        <axis xyz="1 0 0" />
+        <parent link="body" />
+        <child link="rear_right_hip" />
+        <limit effort="1000" velocity="1000.00" lower="-0.78539816339744827899"
+            upper="0.78539816339744827899" />
+    </joint>
+    <link name="rear_right_upper_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_right_upper_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh
+                    filename="package://attraction_description/meshes/rear_right_upper_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="rear_right_hip_y" type="revolute">
+        <origin xyz="0.0 -0.110945 0.0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="rear_right_hip" />
+        <child link="rear_right_upper_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-0.89884456477707963539"
+            upper="2.2951079663725435509" />
+    </joint>
+    <link name="rear_right_lower_leg">
+        <visual>
+            <geometry>
+                <mesh filename="package://attraction_description/meshes/rear_right_lower_leg.dae" />
+            </geometry>
+        </visual>
+        <collision>
+            <geometry>
+                <mesh
+                    filename="package://attraction_description/meshes/rear_right_lower_leg_collision.stl" />
+            </geometry>
+        </collision>
+    </link>
+    <joint name="rear_right_knee" type="revolute">
+        <origin xyz="0.025 0.000 -0.3205" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+        <parent link="rear_right_upper_leg" />
+        <child link="rear_right_lower_leg" />
+        <limit effort="1000" velocity="1000.00" lower="-2.7929" upper="-0.257725" />
+    </joint>
+
+    <!-- Standard accessories. -->
+    <xacro:include filename="$(find attraction_description)/urdf/accessories.urdf.xacro" />
+
+    <!-- Optional custom includes. -->
+    <xacro:include filename="$(optenv SPOT_URDF_EXTRAS empty.urdf)" />
+</robot>
