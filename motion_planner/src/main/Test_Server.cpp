@@ -753,8 +753,6 @@ bool Abc::cb(const std::shared_ptr<custom_interfaces::srv::TaskTest::Request> re
     spot_pose_array.clear();
     walking_arm_ik.clear();
     com_array.clear();
-    // vector<vector<Eigen::Vector3d>>
-    // Gaits::DancingCrawlGait(const Eigen::Matrix4d &ee_goal, vector<Eigen::Vector4d> &com_array, vector<KDL::JntArray> &arm_ik, double distance, double stride_h, int step_num, double angle, const string &str, vector<pair<Eigen::Vector4d, Eigen::Vector3d>> &spot_com_pose_array)
 
     // RP(0.5, 1, 2, goal3, "BD");
     // for (int j = 0; j < 10; j++)
@@ -908,12 +906,12 @@ bool Abc::cb(const std::shared_ptr<custom_interfaces::srv::TaskTest::Request> re
     // com_array.clear();
     // string str12 = "RL";
     // leg_configuration_path = complex_posture_solver2.BowDown(0.35, 0.05, 10.0, 0.3, str12, 100, 0.1, 0.2, spot_pose_array, walking_arm_ik, goal_bd);
-    // gait_solver.leg_planner_solver->arm_planner_solver->Rough(spot_pose_array.size());
+    // gait_solver.leg_planner_solver->arm_planner_solver->ReplacArmAngles(spot_pose_array.size());
     // PublishStates(walking_arm_ik, leg_configuration_path, spot_pose_array, 10, com_array);
     // leg_configuration_path.clear();
     // spot_pose_array.clear();
     // walking_arm_ik.clear();
-    return true;
+    // return true;
 }
 
 int main(int argc, char **argv)

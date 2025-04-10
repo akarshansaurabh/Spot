@@ -28,18 +28,9 @@ namespace ArmMotionPlanner
         vector<Eigen::Vector4d> GenerateBSPlineCP(const Eigen::Matrix4d &goal, Eigen::Matrix4d &current_pose, double z_shift, bool b);
         vector<Eigen::Vector4d> DancingGenerateBSPlineCP(vector<Eigen::Vector4d> &cp_i, const Eigen::Matrix4d &goal, double z_shift, double turning_radius, int index);
 
-        void Rough(int num);
-        // friend TrajectoryPlanner;
+        void ReplacArmAngles(int num);
     };
 
-    // class TrajectoryPlanner
-    // {
-    // private:
-    //     PathPlanner pathplanner_solver;
-
-    // public:
-    //     // TrajectoryPlanner();
-    // };
 }
 
 #endif

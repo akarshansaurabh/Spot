@@ -26,6 +26,7 @@ namespace Gaits
         Straight
     };
 
+    // CrawlMaths  is incomplete as of present. 
     class CrawlMaths
     {
     private:

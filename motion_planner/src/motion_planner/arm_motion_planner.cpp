@@ -154,7 +154,7 @@ namespace ArmMotionPlanner
         }
     }
 
-    void PathPlanner::Rough(int num)
+    void PathPlanner::ReplacArmAngles(int num)
     {
         arm_ik.clear();
         for (int i = 0; i < num; i++)
